@@ -1,5 +1,7 @@
 package code;
 
+import lombok.Data;
+
 /**
  * Auth lhd
  * Date 2025/6/12 11:43

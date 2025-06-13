@@ -16,11 +16,20 @@ import code.PluginContext;
  }
  */
 public class HelloPlugin implements Plugin {
-
     @Override
     public void start(PluginContext context) {
         context.log("Hello Plugin 启动");
         context.reportStat("启动时间", System.currentTimeMillis());
+        context.setAttr("startFlag", true);
+        new Thread(() -> {
+            while (Boolean.TRUE.equals(context.getAttr("startFlag"))) {
+                context.log("Hello Plugin 正在运行...");
+                context.reportStat("执行次数", 1);
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException ignored) {}
+            }
+        }).start();
     }
 
     @Override
