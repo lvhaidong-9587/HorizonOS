@@ -1,5 +1,6 @@
-package code;
+package com.code;
 
+import api.Plugin;
 import com.google.gson.Gson;
 
 import java.io.File;

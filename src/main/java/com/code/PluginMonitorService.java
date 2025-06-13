@@ -1,4 +1,4 @@
-package code;
+package com.code;
 
 import java.util.Collections;
 import java.util.Map;

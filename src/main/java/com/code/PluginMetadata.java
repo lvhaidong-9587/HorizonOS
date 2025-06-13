@@ -1,4 +1,4 @@
-package code;
+package com.code;
 
 import lombok.Data;
 

@@ -1,7 +1,8 @@
 {
-  "id": "hello-plugin",
-  "name": "Hello 插件",
-  "version": "1.0.0",
-  "mainClass": "HelloPlugin",
-  "jar": "plugin.jar"
+    "id": "hello-plugin",
+    "name": "Hello 插件",
+    "version": "1.0.0",
+    "mainClass": "hello.HelloPlugin",
+    "jar": "plugin.jar"
 }
+
