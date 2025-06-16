@@ -9,6 +9,8 @@ import java.io.File;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Auth lhd
@@ -19,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PluginManager {
 
     private final Map<String, LoadedPlugin> plugins = new ConcurrentHashMap<>();
+    private final Map<String, String> pluginStatus = new ConcurrentHashMap<>();
     private final PluginLoader loader = new PluginLoader();
 
     public void loadAll(String dirPath) {
@@ -47,8 +50,10 @@ public class PluginManager {
                 LoadedPlugin plugin = loader.load(pluginDir);
                 plugin.plugin().start(new PluginContextImpl(plugin.metadata().getId()));
                 plugins.put(plugin.metadata().getId(), plugin);
+                pluginStatus.put(plugin.metadata().getId(), "RUNNING");
                 log.info("插件已加载: {}",plugin.metadata().getName());
             } catch (Exception e) {
+                pluginStatus.put(pluginDir.getName(), "FAILED");
                 log.error("插件加载失败: {},错误: {}", pluginDir.getName(),e.getMessage(),e);
             }
         }
@@ -70,4 +75,12 @@ public class PluginManager {
     public Set<String> list() {
         return plugins.keySet();
     }
+
+    public void startMonitorThread() {
+        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> plugins.forEach((id, plugin) -> {
+            String status = pluginStatus.getOrDefault(id, "UNKNOWN");
+            log.info("插件: {},状态: {}", id,status);
+        }), 0, 5, TimeUnit.SECONDS);
+    }
+
 }

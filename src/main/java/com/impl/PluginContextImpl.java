@@ -18,6 +18,7 @@ public class PluginContextImpl implements PluginContext {
     private final String pluginId;
     private final Map<String, Object> attrMap = new ConcurrentHashMap<>();
 
+
     public PluginContextImpl(String pluginId) {
         this.pluginId = pluginId;
     }

@@ -16,7 +16,7 @@ public class App {
         pluginManager.loadAll("plugins");
         log.info("当前插件: ");
         pluginManager.list().forEach(log::info);
-
+        pluginManager.startMonitorThread();
         // 简单运行 10 秒后卸载插件
         Thread.sleep(10000);
         pluginManager.stop("hello-plugin");
